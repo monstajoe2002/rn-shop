@@ -28,6 +28,7 @@ export default function TabsLayout() {
         <Tabs.Screen
           name="index"
           options={{
+            title: "Shop",
             tabBarIcon(props) {
               return <TabBarIcon {...props} name="shopping-cart" />;
             },
@@ -36,6 +37,7 @@ export default function TabsLayout() {
         <Tabs.Screen
           name="orders"
           options={{
+            title: "Orders",
             tabBarIcon(props) {
               return <TabBarIcon {...props} name="book" />;
             },
