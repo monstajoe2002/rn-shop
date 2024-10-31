@@ -5,10 +5,15 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { supabase } from "../lib/supabase";
+import { Toast } from "react-native-toast-notifications";
+import { useAuth } from "../providers/auth-provider";
+import { Redirect } from "expo-router";
 
 const authSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -16,6 +21,9 @@ const authSchema = z.object({
 });
 
 export default function Auth() {
+  const { session } = useAuth();
+  if (session) return <Redirect href="/" />;
+
   const { control, handleSubmit, formState } = useForm({
     resolver: zodResolver(authSchema),
     defaultValues: {
@@ -23,11 +31,29 @@ export default function Auth() {
       password: "",
     },
   });
-  const signIn = (data: z.infer<typeof authSchema>) => {
-    console.log(data);
+  const signIn = async (data: z.infer<typeof authSchema>) => {
+    const { error } = await supabase.auth.signInWithPassword(data);
+    if (error) {
+      Alert.alert(error.message);
+    } else {
+      Toast.show("Signed in successfully", {
+        type: "success",
+        placement: "top",
+        duration: 1500,
+      });
+    }
   };
-  const signUp = (data: z.infer<typeof authSchema>) => {
-    console.log(data);
+  const signUp = async (data: z.infer<typeof authSchema>) => {
+    const { error } = await supabase.auth.signUp(data);
+    if (error) {
+      Alert.alert(error.message);
+    } else {
+      Toast.show("Signed up successfully", {
+        type: "success",
+        placement: "top",
+        duration: 1500,
+      });
+    }
   };
 
   return (
