@@ -1,8 +1,9 @@
 import React from "react";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet } from "react-native";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { useAuth } from "../../providers/auth-provider";
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
@@ -10,6 +11,9 @@ function TabBarIcon(props: {
   return <FontAwesome {...props} size={24} color="#1d4ed8" />;
 }
 export default function TabsLayout() {
+  const { session, mounting } = useAuth();
+  if (mounting) return <ActivityIndicator />;
+  if (!session) return <Redirect href="/auth" />;
   return (
     <SafeAreaView edges={["top"]} style={styles.safeArea}>
       <Tabs

@@ -3,7 +3,7 @@
     "name": "rn-shop",
     "slug": "rn-shop",
     "version": "1.0.0",
-    "scheme":"rn-shop",
+    "scheme": "rn-shop",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -25,7 +25,8 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-secure-store"
     ]
   }
 }
