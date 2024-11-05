@@ -35,3 +35,27 @@ export const getProduct = (slug: string) => {
     },
   });
 };
+
+export const getCatgeoryAndProducts = (categorySlug: string) => {
+  return useQuery({
+    queryKey: ["categoryAndProducts", categorySlug],
+    queryFn: async () => {
+      const { data: category, error: catError } = await supabase
+        .from("category")
+        .select("*")
+        .eq("slug", categorySlug)
+        .single();
+      if (catError || !category) {
+        throw new Error("An error occurred while categories data");
+      }
+      const { data: products, error: productsError } = await supabase
+        .from("product")
+        .select("*")
+        .eq("category", category.id);
+      if (productsError) {
+        throw new Error("An error occurred while products data");
+      }
+      return { category, products };
+    },
+  });
+};
