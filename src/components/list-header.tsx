@@ -10,10 +10,10 @@ import {
 import React from "react";
 import { Link } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
-import { CATEGORIES } from "../../assets/categories";
 import { useCartStore } from "../store/cart-store";
 import { supabase } from "../lib/supabase";
-const ListHeader = () => {
+import { Tables } from "../types/database.types";
+const ListHeader = ({ categories }: { categories: Tables<"category">[] }) => {
   const { getItemCount } = useCartStore();
   const handleSignout = async () => {
     await supabase.auth.signOut();
@@ -67,12 +67,12 @@ const ListHeader = () => {
       <View style={styles.categoriesContainer}>
         <Text style={styles.sectionTitle}>Categories</Text>
         <FlatList
-          data={CATEGORIES}
+          data={categories}
           renderItem={({ item }) => (
             <Link asChild href={`/categories/${item.slug}`}>
               <Pressable style={styles.category}>
                 <Image
-                  source={{ uri: item.imageUrl }}
+                  source={{ uri: item.image_url }}
                   style={styles.categoryImage}
                 />
                 <Text style={styles.categoryText}>{item.name}</Text>
