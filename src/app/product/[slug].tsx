@@ -50,9 +50,10 @@ const ProductDetails = () => {
     addItem({
       id: product.id,
       title: product.title,
-      image: product.hero_image,
+      heroImage: product.hero_image,
       price: product.price,
       quantity,
+      maxQuantity: product.max_quantity,
     });
     toast.show("Added to cart", {
       type: "success",
