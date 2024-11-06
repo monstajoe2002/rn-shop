@@ -20,7 +20,7 @@ const ProductDetails = () => {
   const { items, addItem, incrementItem, decrementItem } = useCartStore();
   const cartItem = items.find((i) => i.id === product?.id);
 
-  const initialQuantity = cartItem ? cartItem.quantity : 1;
+  const initialQuantity = cartItem ? cartItem.quantity : 0;
   const [quantity, setQuantity] = useState(initialQuantity);
 
   if (isLoading) return <ActivityIndicator />;

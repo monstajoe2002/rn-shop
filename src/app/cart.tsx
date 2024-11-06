@@ -82,7 +82,7 @@ export default function Cart() {
     const totalPrice = parseFloat(getTotalPrice());
     try {
       await createSupabaseOrder(
-        { total_price: totalPrice },
+        { totalPrice },
         {
           onSuccess: (data) => {
             createSupabaseOrderItem(

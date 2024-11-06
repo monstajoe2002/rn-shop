@@ -20,7 +20,7 @@ const renderItem: ListRenderItem<Tables<"order">> = ({ item }) => (
           <Text style={styles.orderItem}>{item.slug}</Text>
           <Text style={styles.orderDetails}>{item.description}</Text>
           <Text style={styles.orderDate}>
-            {format(new Date(item.created_at), "MM dd, yyyy")}
+            {format(new Date(item.created_at), "MMM dd, yyyy")}
           </Text>
         </View>
         <View
