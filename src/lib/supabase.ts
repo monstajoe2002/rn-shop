@@ -5,9 +5,13 @@ import * as aesjs from "aes-js";
 import "react-native-get-random-values";
 import { Database } from "../types/database.types";
 
-const supabaseUrl = "https://nrncfuidxyiujrvmqjix.supabase.co";
+// const supabaseUrl = "https://nrncfuidxyiujrvmqjix.supabase.co";
+// const supabaseAnonKey =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ybmNmdWlkeHlpdWpydm1xaml4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzAzOTEzMDYsImV4cCI6MjA0NTk2NzMwNn0.YOJjMOzIeH7pZ7N_A0FIAxCC-Xzmv4BIjA78KqVLpxU";
+const supabaseUrl = "http://127.0.0.1:54321";
 const supabaseAnonKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ybmNmdWlkeHlpdWpydm1xaml4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzAzOTEzMDYsImV4cCI6MjA0NTk2NzMwNn0.YOJjMOzIeH7pZ7N_A0FIAxCC-Xzmv4BIjA78KqVLpxU";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0";
+
 // As Expo's SecureStore does not support values larger than 2048
 // bytes, an AES-256 key is generated and stored in SecureStore, while
 // it is used to encrypt/decrypt values stored in AsyncStorage.
