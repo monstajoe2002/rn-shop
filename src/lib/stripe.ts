@@ -17,18 +17,20 @@ const fetchStripeKeys = async (totalAmount: number) => {
 
 export const setupStripePaymentSheet = async (totalAmount: number) => {
   // fetch payment intent and publishable key from server
-  const { publicKey, paymentIntent } = await fetchStripeKeys(totalAmount);
+  const { publicKey, paymentIntent, ephemeralKey, customer } =
+    await fetchStripeKeys(totalAmount);
   if (!publicKey || !paymentIntent) {
     throw new Error("Failed to fetch Stripe keys");
   }
   const { error } = await initPaymentSheet({
     merchantDisplayName: "monstajoe",
     paymentIntentClientSecret: paymentIntent,
+    customerId: customer,
+    customerEphemeralKeySecret: ephemeralKey,
     billingDetailsCollectionConfiguration: {
       name: "always" as CollectionMode,
       phone: "always" as CollectionMode,
     },
-    returnURL: "/",
   });
 };
 

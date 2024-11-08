@@ -5,22 +5,33 @@
 // Setup type definitions for built-in Supabase Runtime APIs
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import Stripe from "npm:stripe@17.3.1";
+import { getOrCreateStripeCustomer } from "../supabase.ts";
 
-const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, {
+export const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, {
   httpClient: Stripe.createFetchHttpClient(),
 });
 
 Deno.serve(async (req) => {
   const { totalAmount } = await req.json();
 
+  const customer = await getOrCreateStripeCustomer(req);
+
+  const ephemeralKey = await stripe.ephemeralKeys.create(
+    { customer },
+    { apiVersion: "2020-08-27" }
+  );
+
   const paymentIntent = await stripe.paymentIntents.create({
     amount: totalAmount,
     currency: "usd",
+    customer,
   });
 
   const response = {
     paymentIntent: paymentIntent.client_secret,
     publicKey: Deno.env.get("STRIPE_PUBLISHABLE_KEY"),
+    ephemeralKey: ephemeralKey.secret,
+    customer,
   };
   return new Response(JSON.stringify(response), {
     headers: { "Content-Type": "application/json" },
